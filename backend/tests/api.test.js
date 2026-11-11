@@ -7,3 +7,7 @@ test('registration',async()=>{const r=await request(app).post('/api/auth/registe
 test('login',async()=>{const r=await request(app).post('/api/auth/login').send({email:'test@example.com',password:'Password123!'});assert.equal(r.status,200);assert.ok(r.body.data.token);});
 test('protected route rejects missing token',async()=>{const r=await request(app).get('/api/auth/me');assert.equal(r.status,401);});
 test('task creation and retrieval',async()=>{const created=await request(app).post('/api/tasks').set('Authorization',`Bearer ${token}`).send({title:'Test task',assignedTo:user._id.toString(),priority:'high'});assert.equal(created.status,201);const got=await request(app).get(`/api/tasks/${created.body.data._id}`).set('Authorization',`Bearer ${token}`);assert.equal(got.status,200);assert.equal(got.body.data.title,'Test task');});
+
+
+
+
